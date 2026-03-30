@@ -55,7 +55,7 @@ async def audience_node(state: MarketingState) -> dict:
     _emit(campaign_id, "step_start", "audience", "Defining target audience segments...")
 
     if state.get("error"):
-        return {}
+        return {"current_step": "error"}
 
     try:
         audience = await run_audience_agent(state["strategy"])
@@ -77,7 +77,7 @@ async def content_node(state: MarketingState) -> dict:
     _emit(campaign_id, "step_start", "content", "Generating email and website content...")
 
     if state.get("error"):
-        return {}
+        return {"current_step": "error"}
 
     try:
         _emit(campaign_id, "step_progress", "content", "Generating email HTML...")
@@ -104,7 +104,7 @@ async def image_node(state: MarketingState) -> dict:
     _emit(campaign_id, "step_start", "images", "Creating campaign imagery with AI...")
 
     if state.get("error"):
-        return {}
+        return {"current_step": "error"}
 
     try:
         result = await run_image_agent(state["strategy"], state["audience"])
